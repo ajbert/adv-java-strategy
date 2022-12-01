@@ -6,6 +6,8 @@ public class CustomerOrder {
     private double billAmount;
     private char discountType;
 
+    Discounter discount;
+
     public CustomerOrder(String customerName, double billAmount, char discountType) {
         this.customerName = customerName;
         this.billAmount = billAmount;
@@ -17,15 +19,18 @@ public class CustomerOrder {
         switch (discountType) {
             case 'S':
             case 's':
-                tempBill = billAmount - (billAmount * 0.1);
+                discount = new TenPecentOff();
+              tempBill =  discount.getBillAmount(billAmount);
                 break;
             case 'D':
             case 'd':
-                tempBill = billAmount - (billAmount * 0.5);
+                discount = new HalfOff();
+                tempBill = discount.getBillAmount(billAmount);
                 break;
             case 'L':
             case 'l':
-                tempBill = billAmount - (billAmount * 0.75);
+                discount = new SeventyFivePercentOff();
+                tempBill = discount.getBillAmount(billAmount);
                 break;
             default:
                 tempBill = billAmount;
